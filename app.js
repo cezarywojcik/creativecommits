@@ -22,14 +22,8 @@ var bot = new TwitterBot(settings.twitterAccess);
 
 // ---- [ helper functions ] --------------------------------------------------
 
-function tweet(message) {
-  t.post("statuses/update", {
-    "status": message
-  });
-}
-
 function checkCommit(message) {
-  return message.indexOf("fuck") > -1 && message.length < 125;
+  return message.length < 125 && message.indexOf("fuck") > -1 ;
 }
 
 function shortenURL(url, callback) {
@@ -74,5 +68,7 @@ function poll(err, res, body) {
     request(options, poll);
   }, 1000);
 }
+
+// ---- [ init ] --------------------------------------------------------------
 
 request(options, poll);
