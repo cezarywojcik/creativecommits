@@ -1,0 +1,11 @@
+{
+  "name": "creativecommits",
+  "description": "Creative Commits",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "request": "v2.53.0",
+    "node-twitterbot": "0.2.2",
+    "node-curl": "0.3.3"
+  }
+}
