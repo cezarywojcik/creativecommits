@@ -20,6 +20,8 @@ var options = {
 
 var bot = new TwitterBot(settings.twitterAccess);
 
+var lastTweet = "";
+
 // ---- [ helper functions ] --------------------------------------------------
 
 function checkCommit(message) {
@@ -43,10 +45,13 @@ function postCommitAtURL(url) {
       "headers": headers
     }, function(err, res, body) {
       var json = JSON.parse(body);
-      shortenURL(json.html_url, function(u) {
-        bot.tweet(json.commit.message + " " + u);
-       console.log("Tweeting: " + json.commit.message + " " + u);
-      });
+      if (json.commit.message != lastTweet) {
+        lastTweet = json.commit.message;
+        shortenURL(json.html_url, function(u) {
+          bot.tweet(json.commit.message + " " + u);
+          console.log("Tweeting: " + json.commit.message + " " + u);
+        });
+      }
   });
 }
 
