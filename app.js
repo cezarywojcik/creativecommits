@@ -20,14 +20,20 @@ var options = {
 
 var bot = new TwitterBot(settings.twitterAccess);
 
+var words = [
+  "fuck",
+  "obama",
+  "yolo",
+  "swag"
+];
+
 var lastTweet = "";
 
 // ---- [ helper functions ] --------------------------------------------------
 
 function checkCommit(message) {
-  return message.length < 125 && (
-    message.toLowerCase().indexOf("fuck") > -1  ||
-    message.toLowerCase().indexOf("obama") > -1);
+  var pattern = new RegExp(words.join("|"));
+  return message.length < 125 &&  pattern.test(message);
 }
 
 function shortenURL(url, callback) {
