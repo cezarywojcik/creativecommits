@@ -25,8 +25,6 @@ var bot = new TwitterBot(settings.twitterAccess);
 function tweet(message) {
   t.post("statuses/update", {
     "status": message
-  }, function(err, data, res) {
-    console.log("Tweeted: " + message);
   });
 }
 
@@ -53,6 +51,7 @@ function postCommitAtURL(url) {
       var json = JSON.parse(body);
       shortenURL(json.html_url, function(u) {
         bot.tweet(json.commit.message + " " + u);
+       console.log("Tweeting: " + json.commit.message + " " + u);
       });
   });
 }
