@@ -1,6 +1,5 @@
 // ---- [ includes ] ----------------------------------------------------------
 
-var curl = require("node-curl");
 var request = require("request");
 var settings = require("./settings.js");
 var TwitterBot = require("node-twitterbot").TwitterBot;
@@ -57,6 +56,7 @@ function postCommitAtURL(url) {
 }
 
 function poll(err, res, body) {
+  console.log("Polling...");
   var json = JSON.parse(body);
   for (var i in json) {
     if (json[i].type == "PushEvent") {
@@ -70,9 +70,9 @@ function poll(err, res, body) {
       }
     }
   }
-  setTimeout(60000, function() {
+  setTimeout(function() {
     request(options, poll);
-  });
+  }, 60000);
 }
 
 request(options, poll);
