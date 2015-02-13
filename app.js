@@ -12,7 +12,10 @@ var headers = {
 
 var options = {
   "url": "https://api.github.com/events",
-  "headers": headers
+  "headers": headers,
+  "auth": {
+    "username": settings.githubToken + ":x-oauth-basic"
+  }
 };
 
 var bot = new TwitterBot(settings.twitterAccess);
@@ -23,7 +26,7 @@ function tweet(message) {
   t.post("statuses/update", {
     "status": message
   }, function(err, data, res) {
-    console.log(data);
+    console.log("Tweeted: " + message);
   });
 }
 
@@ -50,13 +53,11 @@ function postCommitAtURL(url) {
       var json = JSON.parse(body);
       shortenURL(json.html_url, function(u) {
         bot.tweet(json.commit.message + " " + u);
-        console.log("Tweeting: " + json.commit.message + " " + u);
       });
   });
 }
 
 function poll(err, res, body) {
-  console.log("Polling...");
   var json = JSON.parse(body);
   for (var i in json) {
     if (json[i].type == "PushEvent") {
@@ -72,7 +73,7 @@ function poll(err, res, body) {
   }
   setTimeout(function() {
     request(options, poll);
-  }, 60000);
+  }, 1000);
 }
 
 request(options, poll);
