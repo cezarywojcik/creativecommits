@@ -25,7 +25,9 @@ var lastTweet = "";
 // ---- [ helper functions ] --------------------------------------------------
 
 function checkCommit(message) {
-  return message.length < 125 && message.indexOf("fuck") > -1 ;
+  return message.length < 125 && (
+    message.toLowerCase().indexOf("fuck") > -1  ||
+    message.toLowerCase().indexOf("obama") > -1);
 }
 
 function shortenURL(url, callback) {
@@ -49,7 +51,7 @@ function postCommitAtURL(url) {
         lastTweet = json.commit.message;
         shortenURL(json.html_url, function(u) {
           bot.tweet(json.commit.message + " " + u);
-          console.log("Tweeting: " + json.commit.message + " " + u);
+          console.log("+tweeting: " + json.commit.message + " " + u);
         });
       }
   });
