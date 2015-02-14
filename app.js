@@ -20,9 +20,13 @@ var options = {
 
 var bot = new TwitterBot(settings.twitterAccess);
 
-var words = [
+var yesWords = [
   "fuck",
   "thanks obama"
+];
+
+var noWords = [
+  "brainfuck"
 ];
 
 var lastTweet = "";
@@ -30,8 +34,11 @@ var lastTweet = "";
 // ---- [ helper functions ] --------------------------------------------------
 
 function checkCommit(message) {
-  var pattern = new RegExp(words.join("|"));
-  return message.length < 125 &&  pattern.test(message);
+  var yesPattern = new RegExp(yesWords.join("|"));
+  var noPattern = new RegExp(noWords.join("|"));
+  return message.length < 125 &&
+  yesPattern.test(message.toLowerCase()) &&
+  !noPattern.test(message.toLowerCase());
 }
 
 function shortenURL(url, callback) {
