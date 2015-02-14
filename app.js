@@ -25,8 +25,10 @@ var yesWords = [
   "thanks obama"
 ];
 
+
 var noWords = [
-  "brainfuck"
+  "brainfuck",
+  "brain-fuck"
 ];
 
 var lastTweet = "";

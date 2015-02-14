@@ -5,3 +5,18 @@ https://twitter.com/creativecommits
 This is a simple Twitter bot that is currently set to post any "creative" commits it happens to come across.
 
 To run, `npm install` and then `node app.js`.
+
+## Settings
+
+The format of the `settings.js` file is as follows:
+
+```
+exports.twitterAccess = {
+  "consumer_key": "",
+  "consumer_secret": "",
+  "access_token": "",
+  "access_token_secret": ""
+};
+
+exports.githubToken = "";
+```
