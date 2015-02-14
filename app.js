@@ -22,9 +22,7 @@ var bot = new TwitterBot(settings.twitterAccess);
 
 var words = [
   "fuck",
-  "obama",
-  "yolo",
-  "swag"
+  "thanks obama"
 ];
 
 var lastTweet = "";
