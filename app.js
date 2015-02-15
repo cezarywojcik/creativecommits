@@ -7,7 +7,8 @@ var TwitterBot = require("node-twitterbot").TwitterBot;
 // ---- [ setup ] -------------------------------------------------------------
 
 var headers = {
-  "User-Agent": "creativecommits"
+  "User-Agent": "creativecommits",
+  "ETag": "a18c3bded88eb5dbb5c849a489412bf3"
 };
 
 var options = {
@@ -21,14 +22,15 @@ var options = {
 var bot = new TwitterBot(settings.twitterAccess);
 
 var yesWords = [
+  "cunt",
   "fuck",
   "thanks obama"
 ];
 
-
 var noWords = [
   "brainfuck",
-  "brain-fuck"
+  "brain-fuck",
+  "less-of-a-clusterfuck"
 ];
 
 var lastTweet = "";
