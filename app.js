@@ -51,7 +51,7 @@ function shortenURL(url, callback) {
     "form": {
       "url": url
     }
-  }, function(err, response, body) {
+  }, function (err, response, body) {
     callback(response.headers.location);
   });
 }
@@ -60,11 +60,11 @@ function postCommitAtURL(url) {
   request({
       "url": url,
       "headers": headers
-    }, function(err, res, body) {
+    }, function (err, res, body) {
       var json = JSON.parse(body);
       if (json.commit.message != lastTweet) {
         lastTweet = json.commit.message;
-        shortenURL(json.html_url, function(u) {
+        shortenURL(json.html_url, function (u) {
           bot.tweet(json.commit.message + " " + u);
           console.log("+tweeting: " + json.commit.message + " " + u);
         });
@@ -75,24 +75,21 @@ function postCommitAtURL(url) {
 function poll(err, res, body) {
   try {
     if (res.statusCode !== 304) {
-      var json = JSON.parse(body);
-      for (var i in json) {
-        if (json[i].type == "PushEvent") {
-          var commits = json[i].payload.commits;
-          var url = json[i].repo.url;
-          for (var j in commits) {
-            var message = commits[j].message;
-            if (checkCommit(message)) {
-              postCommitAtURL(commits[j].url);
-            }
-          }
-        }
+      var r = [].concat.apply([], JSON.parse(body)
+        .filter(function (e) { return e.type === "PushEvent" })
+        .map(function (e) {
+          return e.payload.commits.filter(function (f) {
+            return checkCommit(f.message);
+          })
+        }).filter(function (e) { return e.length > 0; }));
+      for (i in r) {
+        postCommitAtURL(r[i].url);
       }
     }
   } catch (e) {
     console.log("-ERROR: " + e.message);
   }
-  setTimeout(function() {
+  setTimeout(function () {
     request(options, poll);
   }, 2000);
 }
