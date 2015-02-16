@@ -30,7 +30,7 @@ var yesWords = [
 var noWords = [
   "brainfuck",
   "brain-fuck",
-  "less-of-a-clusterfuck"
+  "Merge pull request"
 ];
 
 var lastTweet = "";
@@ -73,22 +73,28 @@ function postCommitAtURL(url) {
 }
 
 function poll(err, res, body) {
-  var json = JSON.parse(body);
-  for (var i in json) {
-    if (json[i].type == "PushEvent") {
-      var commits = json[i].payload.commits;
-      var url = json[i].repo.url;
-      for (var j in commits) {
-        var message = commits[j].message;
-        if (checkCommit(message)) {
-          postCommitAtURL(commits[j].url);
+  try {
+    if (res.statusCode !== 304) {
+      var json = JSON.parse(body);
+      for (var i in json) {
+        if (json[i].type == "PushEvent") {
+          var commits = json[i].payload.commits;
+          var url = json[i].repo.url;
+          for (var j in commits) {
+            var message = commits[j].message;
+            if (checkCommit(message)) {
+              postCommitAtURL(commits[j].url);
+            }
+          }
         }
       }
     }
+  } catch (e) {
+    console.log("-ERROR: " + e.message);
   }
   setTimeout(function() {
     request(options, poll);
-  }, 1000);
+  }, 2000);
 }
 
 // ---- [ init ] --------------------------------------------------------------
