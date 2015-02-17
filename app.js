@@ -37,7 +37,8 @@ var yesWords = [
 var noWords = [
   "brainfuck",
   "brain-fuck",
-  "(Merge pull request)"
+  "(Merge pull request)",
+  "(If you reading this go fuck yourself)"
 ];
 
 var lastTweet = "";

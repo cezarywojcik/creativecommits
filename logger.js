@@ -23,7 +23,7 @@ var days = [
   "Saturday"
 ];
 
-var lastMessageLogged = "";
+exports.lastMessageLogged = "";
 
 // ---- [ private functions ] -------------------------------------------------
 
@@ -57,8 +57,8 @@ exports.initLogger = function() {
 }
 
 exports.logCommit = function(dateString, message) {
-  if (message !== lastMessageLogged) {
-    lastMessageLogged = message;
+  if (message !== exports.lastMessageLogged) {
+    exports.lastMessageLogged = message;
     var fucks = message.toLowerCase().match(/fuck/g);
     if (fucks !== null) {
       console.log("Logging " + fucks.length + " fuck" + (fucks.length > 1
