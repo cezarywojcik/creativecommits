@@ -6,7 +6,7 @@ This is a simple Twitter bot that is currently set to post any "creative" commit
 
 To run, `npm install` and then `node app.js`.
 
-If you want to log some statistics, run `node app.js -l` instead.
+If you want to log some stuff about the commits, run `node app.js -l` instead.
 
 ## Settings
 
