@@ -37,12 +37,11 @@ var yesWords = [
 var noWords = [
   "brainfuck",
   "brain-fuck",
-  "(Merge pull request)",
-  "(If you reading this go fuck yourself)"
+  "(merge pull request)",
+  "(if you reading this go fuck yourself)"
 ];
 
 var lastTweet = "";
-var lastMessageLogged = "";
 
 var loggingEnabled = process.argv.indexOf("-l") !== -1;
 
@@ -90,8 +89,7 @@ function poll(err, res, body) {
         .filter(function (e) { return e.type === "PushEvent" })
         .map(function (e) {
           return e.payload.commits.filter(function (f) {
-            if (loggingEnabled && lastMessageLogged !== f.message) {
-              lastMessageLogged = f.message
+            if (loggingEnabled) {
               logger.logCommit(e.created_at, f.message);
             }
             return checkCommit(f.message);

@@ -23,6 +23,8 @@ var days = [
   "Saturday"
 ];
 
+var lastMessageLogged = "";
+
 // ---- [ private functions ] -------------------------------------------------
 
 function ensureLogDirExists() {
@@ -55,9 +57,13 @@ exports.initLogger = function() {
 }
 
 exports.logCommit = function(dateString, message) {
+  if (message === lastMessageLogged) {
+    return;
+  }
   var fucks = message.toLowerCase().match(/fuck/g);
   if (fucks !== null) {
-    console.log("Logging " + fucks.length + " fuck" + (fucks.length > 1
+    lastMessageLogged = message;
+    console.log("-Logging " + fucks.length + " fuck" + (fucks.length > 1
       ? "s" : "") + ".");
     fs.appendFile(settings.logDir + settings.messagesFile, message + "\n",
       function(e) {
