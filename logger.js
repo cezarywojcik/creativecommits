@@ -23,8 +23,6 @@ var days = [
   "Saturday"
 ];
 
-exports.lastMessageLogged = "";
-
 // ---- [ private functions ] -------------------------------------------------
 
 function ensureLogDirExists() {
@@ -57,27 +55,24 @@ exports.initLogger = function() {
 }
 
 exports.logCommit = function(dateString, message) {
-  if (message !== exports.lastMessageLogged) {
-    exports.lastMessageLogged = message;
-    var fucks = message.toLowerCase().match(/fuck/g);
-    if (fucks !== null) {
-      console.log("Logging " + fucks.length + " fuck" + (fucks.length > 1
-        ? "s" : "") + ".");
-      fs.appendFile(settings.logDir + settings.messagesFile, message + "\n",
-        function(e) {
-          if (e !== null) {
-            console.log("-ERROR writing to messages file: " + e);
-          }
-      });
-      var date = new Date(dateString);
-      fs.appendFile(settings.logDir + settings.logFile,
-        days[date.getDay()] + "," + date.getHours() + "," + date.getMinutes()
-          + "," + fucks.length + "\n",
-        function(e) {
-          if (e !== null) {
-            console.log("-ERROR writing to log file: " + e);
-          }
-      });
-    }
+  var fucks = message.toLowerCase().match(/fuck/g);
+  if (fucks !== null) {
+    console.log("Logging " + fucks.length + " fuck" + (fucks.length > 1
+      ? "s" : "") + ".");
+    fs.appendFile(settings.logDir + settings.messagesFile, message + "\n",
+      function(e) {
+        if (e !== null) {
+          console.log("-ERROR writing to messages file: " + e);
+        }
+    });
+    var date = new Date(dateString);
+    fs.appendFile(settings.logDir + settings.logFile,
+      days[date.getDay()] + "," + date.getHours() + "," + date.getMinutes()
+        + "," + fucks.length + "\n",
+      function(e) {
+        if (e !== null) {
+          console.log("-ERROR writing to log file: " + e);
+        }
+    });
   }
 };
