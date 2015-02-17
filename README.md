@@ -19,4 +19,8 @@ exports.twitterAccess = {
 };
 
 exports.githubToken = "";
+
+exports.logDir = "./logs/";
+
+exports.logFile = "log.csv";
 ```

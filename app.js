@@ -1,5 +1,12 @@
+/**
+ * Name: app.js
+ * Desc: The main file for the Creative Commits Twitter bot.
+ * Auth: Cezary Wojcik
+ */
+
 // ---- [ includes ] ----------------------------------------------------------
 
+var logger = require("./logger.js");
 var request = require("request");
 var settings = require("./settings.js");
 var TwitterBot = require("node-twitterbot").TwitterBot;
@@ -24,13 +31,13 @@ var bot = new TwitterBot(settings.twitterAccess);
 var yesWords = [
   "cunt",
   "fuck",
-  "thanks obama"
+  "(thanks obama)"
 ];
 
 var noWords = [
   "brainfuck",
   "brain-fuck",
-  "Merge pull request"
+  "(Merge pull request)"
 ];
 
 var lastTweet = "";
@@ -79,6 +86,7 @@ function poll(err, res, body) {
         .filter(function (e) { return e.type === "PushEvent" })
         .map(function (e) {
           return e.payload.commits.filter(function (f) {
+            logger.logCommit(e.created_at, f.message);
             return checkCommit(f.message);
           })
         }).filter(function (e) { return e.length > 0; }));
@@ -91,9 +99,10 @@ function poll(err, res, body) {
   }
   setTimeout(function () {
     request(options, poll);
-  }, 2000);
+  }, 1000);
 }
 
 // ---- [ init ] --------------------------------------------------------------
 
+logger.initLogger();
 request(options, poll);
