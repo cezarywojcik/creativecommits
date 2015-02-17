@@ -57,10 +57,12 @@ exports.initLogger = function() {
 exports.logCommit = function(dateString, message) {
   var fucks = message.toLowerCase().match(/fuck/g);
   if (fucks !== null) {
+    console.log("Logging " + fucks.length + " fuck" + fucks.length > 1
+      ? "s" : "" + ".");
     var date = new Date(dateString);
     fs.appendFile(settings.logDir + settings.logFile,
       days[date.getDay()] + "," + date.getHours() + "," + date.getMinutes()
-      + "," + fucks.length + "\n",
+        + "," + fucks.length + "\n",
       function(e) {
         if (e !== null) {
           console.log("-ERROR writing to log file: " + e);

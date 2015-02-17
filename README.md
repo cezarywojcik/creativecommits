@@ -6,6 +6,8 @@ This is a simple Twitter bot that is currently set to post any "creative" commit
 
 To run, `npm install` and then `node app.js`.
 
+If you want to log some statistics, run `node app.js -l` instead.
+
 ## Settings
 
 The format of the `settings.js` file is as follows:

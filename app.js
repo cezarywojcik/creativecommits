@@ -42,6 +42,8 @@ var noWords = [
 
 var lastTweet = "";
 
+var loggingEnabled = process.argv.indexOf("-l") !== -1;
+
 // ---- [ helper functions ] --------------------------------------------------
 
 function checkCommit(message) {
@@ -86,7 +88,9 @@ function poll(err, res, body) {
         .filter(function (e) { return e.type === "PushEvent" })
         .map(function (e) {
           return e.payload.commits.filter(function (f) {
-            logger.logCommit(e.created_at, f.message);
+            if (loggingEnabled) {
+              logger.logCommit(e.created_at, f.message);
+            }
             return checkCommit(f.message);
           })
         }).filter(function (e) { return e.length > 0; }));
