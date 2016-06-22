@@ -57,7 +57,7 @@ function checkCommit(message) {
 
 function shortenURL(url, callback) {
   request.post({
-    "url": "http://git.io",
+    "url": "https://git.io",
     "form": {
       "url": url
     }
